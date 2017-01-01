@@ -1,0 +1,6 @@
+/.idea
+
+docker/data/*
+!docker/data/.gitkeep
+docker/apache-php/Dockerfile
+www/node_modules
