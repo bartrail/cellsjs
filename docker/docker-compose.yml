@@ -1,3 +1,4 @@
+#apache/php
 sf_web:
     build: apache-php
     container_name: "sf_web"
