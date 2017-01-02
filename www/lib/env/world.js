@@ -7,22 +7,29 @@
  * Time: 11:27
  */
 
-class World {
+(function() {
+  "use strict";
 
-  constructor(width, height) {
-    this.width       = width;
-    this.height      = height;
-    this.coordinates = [];
-  }
+  class World {
 
-  createEnv(stage) {
-    for (let x = 0; x < this.width; x += SCALE) {
-      for (let y = 0; y < this.height; y += SCALE) {
-        let soil = new Soil(x, y, Math.floor(Math.random() * ELEVATION_MAX) + 1);
-        soil.render(stage);
-        this.coordinates.push([x, y, soil]);
+    constructor(width, height) {
+      this.width       = width;
+      this.height      = height;
+      this.coordinates = [];
+    }
+
+    createEnv(stage) {
+      for (let x = 0; x < this.width; x += config.scale) {
+        for (let y = 0; y < this.height; y += config.scale) {
+          let soil = new CellsJS.Soil(x, y, Math.floor(Math.random() * config.elevationMax) + 1);
+          soil.render(stage);
+          this.coordinates.push([x, y, soil]);
+        }
       }
     }
+
   }
 
-}
+  CellsJS.World = World;
+
+})();

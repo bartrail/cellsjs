@@ -7,34 +7,41 @@
  * Time: 23:21
  */
 
-class Soil extends Pixel {
+(function() {
+  "use strict";
 
-  constructor(x, y, elevation) {
-    super(x, y);
-    this.elevation = elevation;
-  }
+  class Soil extends CellsJS.Pixel {
 
-  set elevation(elevation) {
-    if (elevation > ELEVATION_MAX) {
-      elevation = ELEVATION_MAX;
+    constructor(x, y, elevation) {
+      super(x, y);
+      this.elevation = elevation;
     }
-    if (elevation < ELEVATION_MIN) {
-      elevation = ELEVATION_MIN;
+
+    set elevation(elevation) {
+      if (elevation > config.elevationMax) {
+        elevation = config.elevationMax;
+      }
+      if (elevation < config.elevationMin) {
+        elevation = config.elevationMin;
+      }
+      if (elevation != this._elevation) {
+        this._elevation  = elevation;
+        this.reDrawShape = true;
+      }
     }
-    if (elevation != this._elevation) {
-      this._elevation  = elevation;
-      this.reDrawShape = true;
+
+    get elevation() {
+      return this._elevation;
     }
+
+    get color() {
+      let parts     = 0.75 / config.elevationMax;
+      let luminance = parts * this.elevation;
+      return parseInt(ColorLuminance(config.colorSoil, luminance), 16);
+    }
+
   }
 
-  get elevation() {
-    return this._elevation;
-  }
+  CellsJS.Soil = Soil;
 
-  get color() {
-    let parts     = 0.75 / ELEVATION_MAX;
-    let luminance = parts * this.elevation;
-    return parseInt(ColorLuminance(COLOR_SOIL, luminance), 16);
-  }
-
-}
+})();

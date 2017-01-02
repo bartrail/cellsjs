@@ -7,43 +7,50 @@
  * Time: 10:48
  */
 
-class Pixel {
+(function() {
+  "use strict";
 
-  constructor(x, y) {
-    this.x           = x;
-    this.y           = y;
-    this.reDrawShape = true;
-  }
+  class Pixel {
 
-  get color() {
-    return 0x000000;
-  }
-
-  /**
-   *
-   * @param {PIXI.Stage} stage
-   */
-  render(stage) {
-    this.drawShape();
-    stage.addChild(this.rect);
-  }
-
-  drawShape() {
-    if (typeof(this.rect) == 'undefined') {
-      this.rect = new PIXI.Graphics();
+    constructor(x, y) {
+      this.x           = x;
+      this.y           = y;
+      this.reDrawShape = true;
     }
-    this.rect.beginFill(this.color);
-    this.rect.drawRect(this.x, this.y, SCALE, SCALE);
-    this.rect.endFill();
-  }
 
-  draw() {
-    this.rect.x = this.x;
-    this.rect.y = this.y;
-    if (this.reDrawShape) {
+    get color() {
+      return 0x000000;
+    }
+
+    /**
+     *
+     * @param {PIXI.Stage} stage
+     */
+    render(stage) {
       this.drawShape();
-      this.reDrawShape = false;
+      stage.addChild(this.rect);
     }
+
+    drawShape() {
+      if (typeof(this.rect) == 'undefined') {
+        this.rect = new PIXI.Graphics();
+      }
+      this.rect.beginFill(this.color);
+      this.rect.drawRect(this.x, this.y, config.scale, config.scale);
+      this.rect.endFill();
+    }
+
+    draw() {
+      this.rect.x = this.x;
+      this.rect.y = this.y;
+      if (this.reDrawShape) {
+        this.drawShape();
+        this.reDrawShape = false;
+      }
+    }
+
   }
 
-}
+  CellsJS.Pixel = Pixel;
+
+})();

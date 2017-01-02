@@ -14,40 +14,19 @@ const ELEVATION_MAX = 16;
 const ELEVATION_MIN = 0;
 const COLOR_SOIL    = '735f47';
 
+let config = {
+  renderWidth  : RENDER_WIDTH,
+  renderHeight : RENDER_HEIGHT,
+  scale        : SCALE,
+  elevationMax : ELEVATION_MAX,
+  elevationMin : ELEVATION_MIN,
+  colorSoil    : COLOR_SOIL
+};
+
 (function() {
   "use strict";
 
-  let renderer = PIXI.autoDetectRenderer(RENDER_WIDTH, RENDER_HEIGHT);
-  //Add the canvas to the HTML document
-  document.body.appendChild(renderer.view);
-  //Create a container object called the `stage`
-  let stage = new PIXI.Container();
-
-  var soil;
-
-  function setUp() {
-
-    var game = new Game(stage);
-    gameLoop();
-  }
-
-
-  function gameLoop() {
-
-    //Loop this function 60 times per second
-    requestAnimationFrame(gameLoop);
-
-    // soil.x += 1;
-    //
-    // if (soil.x > 100) {
-    //   soil.elevation += 1;
-    // }
-    // soil.draw();
-
-    //Render the stage
-    renderer.render(stage);
-  }
-
-  setUp();
+    let game = new CellsJS.Game();
+    window.requestAnimationFrame(game.run());
 
 })();
