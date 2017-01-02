@@ -7,22 +7,23 @@
  * Time: 23:21
  */
 
-class Soil {
+class Soil extends Pixel {
 
   constructor(x, y, elevation) {
-    this.x         = x;
-    this.y         = y;
+    super(x, y);
     this.elevation = elevation;
+    this.reRender  = true;
   }
 
   set elevation(elevation) {
     if (elevation > ELEVATION_MAX) {
-      throw new Error('Elevation too High')
+      elevation = ELEVATION_MAX;
     }
     if (elevation < ELEVATION_MIN) {
-      throw new Error('Eleation too Low');
+      elevation = ELEVATION_MIN;
     }
     this._elevation = elevation;
+    this.reRender   = true;
   }
 
   get elevation() {
@@ -35,17 +36,4 @@ class Soil {
     return parseInt(ColorLuminance(COLOR_SOIL, luminance), 16);
   }
 
-  /**
-   *
-   * @param {PIXI.Stage} stage
-   */
-  render(stage) {
-    let rectangle = new PIXI.Graphics();
-    rectangle.beginFill(this.color);
-    rectangle.drawRect(0, 0, RESOLUTION, RESOLUTION);
-    rectangle.endFill();
-    rectangle.x = this.x;
-    rectangle.y = this.y;
-    stage.addChild(rectangle);
-  }
 }

@@ -16,33 +16,40 @@ const COLOR_SOIL    = '735f47';
 
 (function() {
   "use strict";
-  let renderer = PIXI.autoDetectRenderer(RENDER_WIDTH, RENDER_HEIGHT);
 
+  let renderer = PIXI.autoDetectRenderer(RENDER_WIDTH, RENDER_HEIGHT);
   //Add the canvas to the HTML document
   document.body.appendChild(renderer.view);
-
   //Create a container object called the `stage`
   let stage = new PIXI.Container();
 
-  var soil = new Soil(0,0, 10);
-  soil.render(stage);
-  var soil = new Soil(16,16, 16);
-  soil.render(stage);
+  var soil;
 
-  // for (let i = 0; i < squares; i++) {
-  //   for (let ii = 0; ii < squares; ii++) {
-  //     var rectangle = new PIXI.Graphics();
-  //     rectangle.lineStyle(4, 0xFF3300, 1);
-  //     rectangle.beginFill(0x66CCFF);
-  //     rectangle.drawRect(0, 0, RESOLUTION, RESOLUTION);
-  //     rectangle.endFill();
-  //     rectangle.x = i * RESOLUTION;
-  //     rectangle.y = ii * RESOLUTION;
-  //     stage.addChild(rectangle);
-  //   }
-  // }
+  function setUp() {
+    soil = new Soil(0, 0, 10);
+    soil.render(stage);
+    soil = new Soil(16, 16, 1);
+    soil.render(stage);
+    gameLoop();
+  }
 
-  //Tell the `renderer` to `render` the `stage`
-  renderer.render(stage);
+
+  function gameLoop() {
+
+    //Loop this function 60 times per second
+    requestAnimationFrame(gameLoop);
+
+    soil.x += 1;
+
+    if (soil.x > 100) {
+      soil.elevation += 1;
+    }
+    soil.draw();
+
+    //Render the stage
+    renderer.render(stage);
+  }
+
+  setUp();
 
 })();
