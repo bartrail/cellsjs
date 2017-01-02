@@ -9,7 +9,7 @@
 
 const RENDER_WIDTH  = 512;
 const RENDER_HEIGHT = 512;
-const RESOLUTION    = 16;
+const SCALE         = 4;
 const ELEVATION_MAX = 16;
 const ELEVATION_MIN = 0;
 const COLOR_SOIL    = '735f47';
@@ -26,10 +26,8 @@ const COLOR_SOIL    = '735f47';
   var soil;
 
   function setUp() {
-    soil = new Soil(0, 0, 10);
-    soil.render(stage);
-    soil = new Soil(16, 16, 1);
-    soil.render(stage);
+
+    var game = new Game(stage);
     gameLoop();
   }
 
@@ -39,12 +37,12 @@ const COLOR_SOIL    = '735f47';
     //Loop this function 60 times per second
     requestAnimationFrame(gameLoop);
 
-    soil.x += 1;
-
-    if (soil.x > 100) {
-      soil.elevation += 1;
-    }
-    soil.draw();
+    // soil.x += 1;
+    //
+    // if (soil.x > 100) {
+    //   soil.elevation += 1;
+    // }
+    // soil.draw();
 
     //Render the stage
     renderer.render(stage);

@@ -10,9 +10,9 @@
 class Pixel {
 
   constructor(x, y) {
-    this.x        = x;
-    this.y        = y;
-    this.reRender = true;
+    this.x           = x;
+    this.y           = y;
+    this.reDrawShape = true;
   }
 
   get color() {
@@ -24,25 +24,25 @@ class Pixel {
    * @param {PIXI.Stage} stage
    */
   render(stage) {
-    this.drawRect();
+    this.drawShape();
     stage.addChild(this.rect);
   }
 
-  drawRect() {
+  drawShape() {
     if (typeof(this.rect) == 'undefined') {
       this.rect = new PIXI.Graphics();
     }
     this.rect.beginFill(this.color);
-    this.rect.drawRect(0, 0, RESOLUTION, RESOLUTION);
+    this.rect.drawRect(this.x, this.y, SCALE, SCALE);
     this.rect.endFill();
   }
 
   draw() {
     this.rect.x = this.x;
     this.rect.y = this.y;
-    if (this.reRender) {
-      this.drawRect();
-      this.reRender = false;
+    if (this.reDrawShape) {
+      this.drawShape();
+      this.reDrawShape = false;
     }
   }
 

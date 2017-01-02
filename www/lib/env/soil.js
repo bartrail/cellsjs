@@ -12,7 +12,6 @@ class Soil extends Pixel {
   constructor(x, y, elevation) {
     super(x, y);
     this.elevation = elevation;
-    this.reRender  = true;
   }
 
   set elevation(elevation) {
@@ -22,8 +21,10 @@ class Soil extends Pixel {
     if (elevation < ELEVATION_MIN) {
       elevation = ELEVATION_MIN;
     }
-    this._elevation = elevation;
-    this.reRender   = true;
+    if (elevation != this._elevation) {
+      this._elevation  = elevation;
+      this.reDrawShape = true;
+    }
   }
 
   get elevation() {
