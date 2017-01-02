@@ -13,12 +13,14 @@
   class Game {
 
     constructor() {
+
       this.renderer = PIXI.autoDetectRenderer(config.renderWidth, config.renderHeight);
       document.body.appendChild(this.renderer.view);
       this.stage = new PIXI.Container();
 
       this.world = new CellsJS.World(config.renderWidth, config.renderHeight);
       this.world.createEnv(this.stage);
+
     }
 
     update() {
@@ -53,10 +55,6 @@
   Game.fps          = 60;
   Game.maxFrameSkip = 10;
   Game.skipTicks    = 1000 / Game.fps;
-
-  Game.run = (function() {
-
-  })();
 
   CellsJS.Game = Game;
 

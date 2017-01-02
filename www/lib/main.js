@@ -13,6 +13,7 @@ const SCALE         = 4;
 const ELEVATION_MAX = 16;
 const ELEVATION_MIN = 0;
 const COLOR_SOIL    = '735f47';
+const SEED          = 1234567890;
 
 let config = {
   renderWidth  : RENDER_WIDTH,
@@ -20,13 +21,16 @@ let config = {
   scale        : SCALE,
   elevationMax : ELEVATION_MAX,
   elevationMin : ELEVATION_MIN,
-  colorSoil    : COLOR_SOIL
+  colorSoil    : COLOR_SOIL,
+  seed         : SEED
 };
 
 (function() {
   "use strict";
 
-    let game = new CellsJS.Game();
-    window.requestAnimationFrame(game.run());
+  Math.seedrandom(config.seed);
+
+  let game = new CellsJS.Game();
+  window.requestAnimationFrame(game.run());
 
 })();
