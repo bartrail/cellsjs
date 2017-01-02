@@ -30,15 +30,13 @@ let config = {
 
   Math.seedrandom(config.seed);
 
-  let game = new CellsJS.Game();
+  let game = CellsJS.Game.factory();
 
   // window.onEachFrame(function() {
   //   game.run();
   // });
 
-  window.requestAnimationFrame(function() {
-    game.run();
-  });
+  window.requestAnimationFrame(CellsJS.Game.run);
 
   window.addEventListener("keydown", function(event) {
     if (event.keyCode == 32) {

@@ -35,37 +35,44 @@
 
     update() {
       console.log((new Date).getTime());
-      console.log(this.world.terrainMap.get(0,0).visible);
+      console.log(this.world.terrainMap.get(0, 0).visible);
     }
 
     draw() {
       this.renderer.render(this.terrainStage);
     }
-
-    run() {
-      let loops        = 0,
-          skipTicks    = 1000 / Game.fps,
-          maxFrameSkip = 10,
-          nextGameTick = (new Date).getTime();
-
-      return function() {
-        loops = 0;
-
-        while ((new Date).getTime() > nextGameTick && loops < maxFrameSkip) {
-          this.update();
-          nextGameTick += skipTicks;
-          loops++;
-        }
-
-        this.draw();
-      }.bind(this);
-    }
-
   }
 
   Game.fps          = 60;
   Game.maxFrameSkip = 10;
   Game.skipTicks    = 1000 / Game.fps;
+  Game.instance     = null; // static reference to created game instance
+
+  // use factory to create game
+  Game.factory = function() {
+    let game      = new Game();
+    Game.instance = game;
+    return game;
+  };
+
+  Game.run = (function() {
+    let loops        = 0,
+        skipTicks    = 1000 / Game.fps,
+        maxFrameSkip = 10,
+        nextGameTick = (new Date).getTime();
+
+    return function() {
+      loops = 0;
+
+      while ((new Date).getTime() > nextGameTick && loops < maxFrameSkip) {
+        Game.instance.update();
+        nextGameTick += skipTicks;
+        loops++;
+      }
+
+      Game.instance.draw();
+    }.bind(this);
+  })();
 
   CellsJS.Game = Game;
 
