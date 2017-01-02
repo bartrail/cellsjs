@@ -16,23 +16,30 @@
 
       this.renderer = PIXI.autoDetectRenderer(config.renderWidth, config.renderHeight);
       document.body.appendChild(this.renderer.view);
+      PIXI.settings.SCALE_MODE = 'NEAREST';
 
       this.showTerrain  = true;
       this.showEnergy   = true;
       this.terrainStage = new PIXI.Container();
       this.energyStage  = new PIXI.Container();
+      this.terrainStage.scale.set(config.scale);
+      this.energyStage.scale.set(config.scale);
 
       this.world = new CellsJS.World(config.renderWidth, config.renderHeight);
       this.world.createEnv(this.terrainStage, this.energyStage);
+      this.world.terrainMap.renderLayer();
+
+      this.renderer.resize(config.renderWidth * config.scale, config.renderHeight * config.scale);
 
     }
 
     update() {
-
+      console.log((new Date).getTime());
+      console.log(this.world.terrainMap.get(0,0).visible);
     }
 
     draw() {
-      this.renderer.render(this.stage);
+      this.renderer.render(this.terrainStage);
     }
 
     run() {

@@ -12,9 +12,11 @@
 
   class Pixel {
 
-    constructor(x, y) {
+    constructor(stage, x, y) {
+      this.stage       = stage;
       this.x           = x;
       this.y           = y;
+      this.visible     = true;
       this.reDrawShape = true;
     }
 
@@ -22,13 +24,13 @@
       return 0x000000;
     }
 
-    /**
-     *
-     * @param {PIXI.Stage} stage
-     */
-    render(stage) {
-      this.drawShape();
-      stage.addChild(this.rect);
+    render() {
+      if (this.visible) {
+        this.drawShape();
+        this.stage.addChild(this.rect);
+      } else {
+        this.stage.removeChild(this.rect);
+      }
     }
 
     drawShape() {
@@ -36,16 +38,20 @@
         this.rect = new PIXI.Graphics();
       }
       this.rect.beginFill(this.color);
-      this.rect.drawRect(this.x, this.y, config.scale, config.scale);
+      this.rect.drawRect(this.x, this.y, 1, 1);
       this.rect.endFill();
     }
 
     draw() {
-      this.rect.x = this.x;
-      this.rect.y = this.y;
-      if (this.reDrawShape) {
-        this.drawShape();
-        this.reDrawShape = false;
+      if(this.visible) {
+        this.rect.x = this.x;
+        this.rect.y = this.y;
+        if (this.reDrawShape) {
+          this.drawShape();
+          this.reDrawShape = false;
+        }
+      }else{
+        this.stage.removeChild(this.rect);
       }
     }
 

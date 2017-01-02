@@ -7,8 +7,8 @@
  * Time: 22:35
  */
 
-const RENDER_WIDTH  = 512;
-const RENDER_HEIGHT = 512;
+const RENDER_WIDTH  = 128;
+const RENDER_HEIGHT = 128;
 const SCALE         = 4;
 const ELEVATION_MAX = 16;
 const ELEVATION_MIN = 0;
@@ -31,6 +31,28 @@ let config = {
   Math.seedrandom(config.seed);
 
   let game = new CellsJS.Game();
-  window.requestAnimationFrame(game.run());
+
+  // window.onEachFrame(function() {
+  //   game.run();
+  // });
+
+  window.requestAnimationFrame(function() {
+    game.run();
+  });
+
+  window.addEventListener("keydown", function(event) {
+    if (event.keyCode == 32) {
+      game.world.terrainMap.all(function(item) {
+        item.visible = false;
+      });
+    }
+  }, false);
+  window.addEventListener("keyup", function(event) {
+    if (event.keyCode == 32) {
+      game.world.terrainMap.all(function(item) {
+        item.visible = true;
+      });
+    }
+  }, false);
 
 })();
