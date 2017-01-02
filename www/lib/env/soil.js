@@ -12,9 +12,10 @@
 
   class Soil extends CellsJS.Pixel {
 
-    constructor(x, y, elevation) {
+    constructor(x, y, elevation, energy) {
       super(x, y);
       this.elevation = elevation;
+      this.energy    = energy;
     }
 
     set elevation(elevation) {

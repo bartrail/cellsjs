@@ -16,10 +16,14 @@
 
       this.renderer = PIXI.autoDetectRenderer(config.renderWidth, config.renderHeight);
       document.body.appendChild(this.renderer.view);
-      this.stage = new PIXI.Container();
+
+      this.showTerrain  = true;
+      this.showEnergy   = true;
+      this.terrainStage = new PIXI.Container();
+      this.energyStage  = new PIXI.Container();
 
       this.world = new CellsJS.World(config.renderWidth, config.renderHeight);
-      this.world.createEnv(this.stage);
+      this.world.createEnv(this.terrainStage, this.energyStage);
 
     }
 
