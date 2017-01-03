@@ -14,23 +14,48 @@
 
     constructor(stage, x, y) {
       this.stage       = stage;
+      this.onStage     = false;
       this.x           = x;
       this.y           = y;
       this.visible     = true;
       this.reDrawShape = true;
     }
 
-    get color() {
-      return 0x000000;
+    set x(x) {
+      this._x          = x;
+      this.reDrawShape = true;
+      if (this.rect) {
+        this.rect.x = x;
+      }
     }
 
-    render() {
-      if (this.visible) {
-        this.drawShape();
-        this.stage.addChild(this.rect);
-      } else {
-        this.stage.removeChild(this.rect);
+    get x() {
+      return this._x;
+    }
+
+    set y(y) {
+      this._y          = y;
+      this.reDrawShape = true;
+      if (this.rect) {
+        this.rect.y = y;
       }
+    }
+
+    get y() {
+      return this._y;
+    }
+
+    set visible(visible) {
+      this._visible    = visible;
+      this.reDrawShape = true;
+    }
+
+    get visible() {
+      return this._visible;
+    }
+
+    get color() {
+      return 0x000000;
     }
 
     drawShape() {
@@ -43,16 +68,23 @@
     }
 
     draw() {
-      if(this.visible) {
-        this.rect.x = this.x;
-        this.rect.y = this.y;
+      if (this.visible) {
+
         if (this.reDrawShape) {
           this.drawShape();
           this.reDrawShape = false;
         }
-      }else{
+
+        if (this.onStage == false) {
+          this.stage.addChild(this.rect);
+          this.onStage = true;
+        }
+
+      } else if (this.onStage) {
+        this.onStage = false;
         this.stage.removeChild(this.rect);
       }
+
     }
 
   }

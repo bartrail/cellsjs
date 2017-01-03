@@ -28,10 +28,10 @@
       }
     }
 
-    renderLayer() {
+    draw() {
       this.all(function(item) {
-        item.render();
-      })
+        item.draw();
+      });
     }
 
     all(callback) {

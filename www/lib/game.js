@@ -18,27 +18,36 @@
       document.body.appendChild(this.renderer.view);
       PIXI.settings.SCALE_MODE = 'NEAREST';
 
-      this.showTerrain  = true;
-      this.showEnergy   = true;
       this.terrainStage = new PIXI.Container();
       this.energyStage  = new PIXI.Container();
       this.terrainStage.scale.set(config.scale);
       this.energyStage.scale.set(config.scale);
 
       this.world = new CellsJS.World(config.renderWidth, config.renderHeight);
-      this.world.createEnv(this.terrainStage, this.energyStage);
-      this.world.terrainMap.renderLayer();
+      this.world.createTerrain(this.terrainStage);
+      this.world.createEnergyMap(this.energyStage);
 
       this.renderer.resize(config.renderWidth * config.scale, config.renderHeight * config.scale);
 
     }
 
+    showTerrain(show) {
+      this.terrainStage.alpha = show;
+    }
+
     update() {
-      console.log((new Date).getTime());
-      console.log(this.world.terrainMap.get(0, 0).visible);
+      // console.log((new Date).getTime());
+      // console.log(this.world.terrainMap.get(0, 0).visible);
     }
 
     draw() {
+      if(this.terrainStage.visible) {
+        this.world.terrainMap.draw();
+      }
+      if(this.energyStage.visible) {
+        this.world.energyMap.draw();
+      }
+      this.renderer.render(this.energyStage);
       this.renderer.render(this.terrainStage);
     }
   }

@@ -17,22 +17,39 @@
       this.height = height;
     }
 
-    createEnv(terrainStage, energyStage) {
+    createTerrain(stage) {
 
-      this.terrainMap = new CellsJS.MapLayer(terrainStage);
-      // this.energyMap  = new CellsJS.MapLayer();
-      // this.plantMap   = new CellsJS.MapLayer();
+      this.terrainMap = new CellsJS.MapLayer(stage);
+
+      // todo terrain generator
 
       for (let x = 0; x < this.width; x++) {
         for (let y = 0; y < this.height; y++) {
           let soil = new CellsJS.Soil(
-            terrainStage,
+            stage,
             x,
             y,
-            Math.randomInt(0, config.elevationMax)
+            Math.randomInt(config.elevationMin, config.elevationMax)
           );
           this.terrainMap.set(x, y, soil);
-          // this.coordinates.push([x, y, soil]);
+        }
+      }
+    }
+
+    createEnergyMap(stage) {
+      this.energyMap = new CellsJS.MapLayer(stage);
+
+      // todo terrain generator
+
+      for (let x = 0; x < this.width; x++) {
+        for (let y = 0; y < this.height; y++) {
+          let energy = new CellsJS.EnergySoil(
+            stage,
+            x,
+            y,
+            Math.randomInt(config.energyMin, config.energyMax)
+          );
+          this.energyMap.set(x, y, energy);
         }
       }
     }
