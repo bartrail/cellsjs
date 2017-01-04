@@ -40,19 +40,17 @@ let config = {
 
   window.onEachFrame(CellsJS.Game.run);
 
-  window.addEventListener("keydown", function(event) {
-    switch (event.keyCode) {
-      case 32: // space
-        game.showTerrain(0.5);
-        break;
-    }
-  }, false);
-  window.addEventListener("keyup", function(event) {
-    switch (event.keyCode) {
-      case 32: //space
-        game.showTerrain(1);
-        break;
-    }
-  }, false);
+  Mousetrap.bind('m', function(event) {
+    game.showTerrain(false);
+  });
+  Mousetrap.bind('m', function(event) {
+    game.showTerrain(true);
+  }, 'keyup');
+  Mousetrap.bind('e', function(event) {
+    game.showEnergy(true);
+  });
+  Mousetrap.bind('e', function(event) {
+    game.showEnergy(false);
+  }, 'keyup');
 
 })();

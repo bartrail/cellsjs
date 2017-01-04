@@ -18,13 +18,13 @@
       document.body.appendChild(this.renderer.view);
       PIXI.settings.SCALE_MODE = 'NEAREST';
 
-      this.mainStage    = new PIXI.Container();
+      this.mainStage = new PIXI.Container();
       this.mainStage.scale.set(config.scale);
 
-      this.terrainStage = new PIXI.Container();
-      this.energyStage  = new PIXI.Container();
-      this.mainStage.addChild(this.energyStage);
-      this.mainStage.addChild(this.terrainStage);
+      this.terrainStage        = new PIXI.Container();
+      this.energyStage         = new PIXI.Container();
+      this.energyStage.visible = false;
+      this.mainStage.addChild(this.energyStage, this.terrainStage);
 
       this.world = new CellsJS.World(config.renderWidth, config.renderHeight);
       this.world.createTerrain(this.terrainStage);
@@ -34,8 +34,13 @@
 
     }
 
-    showTerrain(show) {
-      this.terrainStage.alpha = show;
+    showTerrain(visible) {
+      this.terrainStage.visible = visible;
+    }
+
+    showEnergy(visible) {
+      this.terrainStage.visible = !visible;
+      this.energyStage.visible = visible;
     }
 
     update() {
@@ -44,10 +49,10 @@
     }
 
     draw() {
-      if(this.terrainStage.visible) {
+      if (this.terrainStage.visible) {
         this.world.terrainMap.draw();
       }
-      if(this.energyStage.visible) {
+      if (this.energyStage.visible) {
         this.world.energyMap.draw();
       }
       this.renderer.render(this.mainStage);
